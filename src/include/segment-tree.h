@@ -35,7 +35,6 @@ class CSegmentTree:
 		std::vector<T> values;
 		size_t element_count;
 		size_t values_first_index;
-		Operation operation;
 
 		template<typename InputIterator>
 		void BuildTree(size_t, size_t, InputIterator &, InputIterator);
@@ -48,8 +47,7 @@ template<typename T, typename Operation, T DefaultValue>
 CSegmentTree<T, Operation, DefaultValue>::CSegmentTree():
 	values(),
 	element_count(0),
-	values((size_t)-1),
-	operation()
+	values((size_t)-1)
 {
 }
 
@@ -58,8 +56,7 @@ template<typename InputIterator>
 CSegmentTree<T, Operation, DefaultValue>::CSegmentTree(InputIterator from, InputIterator to):
 	values(),
 	element_count((size_t)(to - from)),
-	values_first_index((size_t)-1),
-	operation()
+	values_first_index((size_t)-1)
 {
 	BuildTree(0, 1, from, to);
 }
@@ -77,7 +74,7 @@ CSegmentTree<T, Operation, DefaultValue> &CSegmentTree<T, Operation, DefaultValu
 	for (; i > 0; )
 	{
 		size_t parent = (i - 1) / 2;
-		values[parent] = operation(values[2 * parent + 1], values[2 * parent + 2]); // обновление значений предков
+		values[parent] = Operation()(values[2 * parent + 1], values[2 * parent + 2]); // обновление значений предков
 		i = parent;
 	}
 
@@ -125,7 +122,7 @@ void CSegmentTree<T, Operation, DefaultValue>::BuildTree(size_t current, size_t 
 		BuildTree(left, current_depth_count * 2, from, to); // построение левого
 		BuildTree(right, current_depth_count * 2, from, to); // и правого поддерева
 
-		values[current] = operation(values[left], values[right]); // вычисление значения операции Operation для корня
+		values[current] = Operation()(values[left], values[right]); // вычисление значения операции Operation для корня
 	}
 }
 
@@ -142,6 +139,6 @@ T CSegmentTree<T, Operation, DefaultValue>::Calculate(size_t from, size_t to, si
 	}
 
 	size_t middle_bound = (left_bound + right_bound) / 2;
-	return operation(Calculate(from, std::min(to, middle_bound), 2 * current + 1, left_bound, middle_bound),
+	return Operation()(Calculate(from, std::min(to, middle_bound), 2 * current + 1, left_bound, middle_bound),
 		Calculate(std::max(middle_bound + 1, from), to, 2 * current + 2, middle_bound + 1, right_bound));
 }
