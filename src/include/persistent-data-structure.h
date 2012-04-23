@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdlib.h>
-
 #include <stdexcept>
 
 class IPersistentDataStructure
