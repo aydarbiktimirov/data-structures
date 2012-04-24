@@ -1,6 +1,3 @@
-data-structures
-===============
-
 rollback
 ========
 
