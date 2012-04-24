@@ -7,5 +7,8 @@ bin/include/persistent-data-structure.o: src/include/persistent-data-structure.h
 	mkdir -p bin/include/
 	g++ $(CXXFLAGS) src/include/persistent-data-structure.cpp -c -o bin/include/persistent-data-structure.o
 
+rollback: bin/include/persistent-data-structure.o src/rollback.cpp
+	g++ $(CXXFLAGS) bin/include/persistent-data-structure.o src/rollback.cpp -o bin/rollback
+
 clean:
 	rm -rf bin/
