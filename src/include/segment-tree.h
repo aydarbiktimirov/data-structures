@@ -47,7 +47,7 @@ template<typename T, typename Operation, T DefaultValue>
 CSegmentTree<T, Operation, DefaultValue>::CSegmentTree():
 	values(),
 	element_count(0),
-	values((size_t)-1)
+	values_first_index((size_t)-1)
 {
 }
 
