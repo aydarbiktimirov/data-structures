@@ -16,13 +16,13 @@ class CRollback
 		size_t Find(size_t, size_t) const;
 
 	private:
-		CPersistentSegmentTree<size_t, std::plus<size_t>, 0> tree;
+		CPersistentSegmentTree<size_t, std::plus<size_t> > tree;
 		size_t n;
 
 };
 
 CRollback::CRollback(const std::vector<size_t> &a, size_t m):
-	tree(),
+	tree(0),
 	n(a.size())
 {
 	std::vector<size_t> b(n, 0);
@@ -37,7 +37,7 @@ CRollback::CRollback(const std::vector<size_t> &a, size_t m):
 			is_new[a[i]] = false; // b[i] = 1, если a[i] встретилось в a впервые
 		}
 	}
-	tree = CPersistentSegmentTree<size_t, std::plus<size_t>, 0>(b.begin(), b.end()); // построение персистентного дерева отрезков по массиву b
+	tree = CPersistentSegmentTree<size_t, std::plus<size_t> >(b.begin(), b.end(), 0); // построение персистентного дерева отрезков по массиву b
 	for (size_t i = 0; i < n; ++i) // создание новых версий в дереве, отвечающих за l > 1 (0)
 	{
 		tree.Change(i, 0); // зануление b[i]

@@ -15,7 +15,7 @@ int main()
 		std::cin >> a[i];
 	}
 
-	CPersistentSegmentTree<int, std::plus<int>, 0> tree(a.begin(), a.end());
+	CPersistentSegmentTree<int, std::plus<int> > tree(a.begin(), a.end(), 0);
 	for (std::string cmd; !std::cin.eof(); )
 	{
 		std::cout << "> ";
